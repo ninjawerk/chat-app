@@ -44,6 +44,7 @@ namespace ServerApp
                         .AllowCredentials();
                 }));
 
+            services.AddSingleton<IConnectionMapping, ConnectionMapping>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
 

@@ -6,11 +6,16 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\DTOs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\IConnectionMapping1.cs" />
+  </ItemGroup>
 </Project>

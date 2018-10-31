@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ServerApp.Models.DTOs;
 
 namespace ServerApp.Services
 {
-    public class ConnectionMapping<T> : IConnectionMapping<T>
+    /// <summary>
+    /// Connection mapping class will hold some meta data per connection.
+    /// </summary>
+    public class ConnectionMapping : IConnectionMapping 
     {
-        private readonly Dictionary<T, HashSet<string>> _connections =
-            new Dictionary<T, HashSet<string>>();
+        private readonly Dictionary<string, ConnectionUser> _connections =
+            new Dictionary<string, ConnectionUser>();
 
         public int Count
         {
@@ -18,54 +22,45 @@ namespace ServerApp.Services
             }
         }
 
-        public void Add(T key, string connectionId)
+        public void Add(string connectionId, ConnectionUser connUser)
         {
             lock (_connections)
             {
-                HashSet<string> connections;
-                if (!_connections.TryGetValue(key, out connections))
-                {
-                    connections = new HashSet<string>();
-                    _connections.Add(key, connections);
-                }
+                ConnectionUser user;
 
-                lock (connections)
+                if (!_connections.TryGetValue(connectionId, out user))
                 {
-                    connections.Add(connectionId);
+                    _connections.Add(connectionId, connUser);
+                }
+                else
+                {
+                    //overwrite the username for that connection
+                    _connections[connectionId] = user;
                 }
             }
         }
 
-        public IEnumerable<string> GetConnections(T key)
+        public ConnectionUser GetUser(string connection)
         {
-            HashSet<string> connections;
-            if (_connections.TryGetValue(key, out connections))
+            ConnectionUser user;
+            if (_connections.TryGetValue(connection, out user))
             {
-                return connections;
+                return user;
             }
 
-            return Enumerable.Empty<string>();
+            return null;
         }
 
-        public void Remove(T key, string connectionId)
+        public void RemoveUser(string connectionId)
         {
             lock (_connections)
             {
-                HashSet<string> connections;
-                if (!_connections.TryGetValue(key, out connections))
+                if (!_connections.Any(c=>c.Key == connectionId))
                 {
                     return;
                 }
-
-                lock (connections)
-                {
-                    connections.Remove(connectionId);
-
-                    if (connections.Count == 0)
-                    {
-                        _connections.Remove(key);
-                    }
-                }
+ 
+                _connections.Remove(connectionId);
             }
         }
     }

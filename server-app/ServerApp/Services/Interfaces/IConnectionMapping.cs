@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-
+using ServerApp.Models.DTOs;
 namespace ServerApp.Services
 {
-    public interface IConnectionMapping<T>
+    public interface IConnectionMapping
     {
         int Count { get; }
-        void Add(T key, string connectionId);
-        IEnumerable<string> GetConnections(T key);
-        void Remove(T key, string connectionId);
+
+        void Add(string connectionId, ConnectionUser connUser);
+        ConnectionUser GetUser(string connection);
+        void RemoveUser(string connectionId);
     }
 }

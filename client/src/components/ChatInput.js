@@ -9,7 +9,8 @@ class ChatInput extends Component {
     }
   }
 
-  sendMessage = () => {
+  sendMessage = (e) => {
+    e.preventDefault();
     this.props.sendMessage(this.state.message);
     this.setState({ message: "" });
   }
@@ -20,10 +21,14 @@ class ChatInput extends Component {
 
   render() {
     return (
-      <div>
+      <div className="col-12 p-4" style={{background: "#e4e4e4"}}>
         <form onSubmit={this.sendMessage}>
-          <input value={this.state.message} onChange={this.handleMessageChange} />
-          <input type="submit" value="send" />
+          <div className="row">
+            <textarea value={this.state.message} onChange={this.handleMessageChange} className="col-10 rounded"/>
+            <span className="col-2 mx-auto">
+              <input type="submit" value="send"  className="btn btn-primary btn-block"/>
+            </span>
+          </div>
         </form>
       </div >
     )
