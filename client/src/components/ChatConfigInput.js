@@ -26,13 +26,25 @@ class ChatConfigInput extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.sendConfig}>
-          <input value={this.state.message} onChange={this.handleUsernameChange} placeholder="Username"/>
-          <input value={this.state.message} onChange={this.handleRoomNameChange} placeholder="Meeting Name"/>
-          <input type="submit" value="send" />
-        </form>
-      </div >
+        <form onSubmit={this.sendConfig} className="row w-100 p-2">
+          <div className="input-group  col-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="basic-addon1">@</span>
+            </div>
+            <input type="text" className="form-control" placeholder="Username" aria-label="Username" 
+                   aria-describedby="basic-addon1" value={this.state.message} onChange={this.handleUsernameChange}/>
+          </div>
+          <div className="input-group col-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="basic-addon1">@</span>
+            </div>
+            <input type="text" className="form-control" placeholder="Meeting Name" aria-label="Username" 
+                   aria-describedby="basic-addon1" value={this.state.message} onChange={this.handleRoomNameChange} />
+          </div>
+          <div className="col-2">
+            <input type="submit" value="Enter" className="btn btn-info btn-block"/>
+          </div>
+        </form>   
     )
   }
 }

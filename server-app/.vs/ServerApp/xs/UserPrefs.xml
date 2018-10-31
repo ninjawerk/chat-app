@@ -1,14 +1,14 @@
 ﻿<Properties StartupConfiguration="{54DE3DB1-10CE-4D28-850F-F0917D4EDF3E}|Default">
   <MonoDevelop.Ide.ItemProperties.ServerApp PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ServerApp/Hubs/ChatHub.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ServerApp/Program.cs">
     <Files>
       <File FileName="ServerApp/Services/UserProvider.cs" Line="1" Column="1" />
       <File FileName="ServerApp/Services/ConnectionMapping.cs" Line="12" Column="18" />
-      <File FileName="ServerApp/Hubs/ChatHub.cs" Line="33" Column="14" />
-      <File FileName="ServerApp/Program.cs" Line="1" Column="1" />
+      <File FileName="ServerApp/Hubs/ChatHub.cs" Line="53" Column="14" />
+      <File FileName="ServerApp/Program.cs" Line="25" Column="1" />
       <File FileName="ServerApp/Startup.cs" Line="46" Column="1" />
       <File FileName="ServerApp/Services/Interfaces/IConnectionMapping.cs" Line="10" Column="24" />
-      <File FileName="ServerApp/Models/DTOs/ChatMessage.cs" Line="2" Column="32" />
+      <File FileName="ServerApp/Models/DTOs/ChatMessage.cs" Line="17" Column="10" />
       <File FileName="ServerApp/Models/DTOs/ConnectionUser.cs" Line="11" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
