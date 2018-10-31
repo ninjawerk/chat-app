@@ -1,10 +1,11 @@
 ﻿using System;
 namespace ServerApp.Models.Enums
 {
-    public class CommandType
+    public enum CommandType
     {
-        public CommandType()
-        {
-        }
+        Success,
+        Info,
+        Warning,
+        Error
     }
 }

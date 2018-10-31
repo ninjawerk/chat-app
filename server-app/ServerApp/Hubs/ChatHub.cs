@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting.Internal;
 using ServerApp.Services;
 using ServerApp.Models.DTOs;
+using ServerApp.Models.Enums;
 
 namespace ServerApp.Hubs
 {
     public class ChatHub : Hub
     {
+        const string COMMAND_REG = "REG";
+        const string COMMAND_CHAT = "CHAT";
         private IConnectionMapping _connectionMapping;
 
         public ChatHub(IConnectionMapping connectionMapping)
@@ -28,12 +29,12 @@ namespace ServerApp.Hubs
             var user = _connectionMapping.GetUser(Context.ConnectionId);
             if (user != null)
             {
-                var chatMessage = new ChatMessage(user.Username, message);
+                var chatMessage = new ChatMessage(user.Username, message, CommandType.Success, COMMAND_CHAT);
                 return Clients.Group(groupName).SendAsync("Send", chatMessage);
             }
             else 
             {
-                return Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot","Failed to send message :(")); 
+                return Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot","Failed to send message :(", CommandType.Error, COMMAND_CHAT)); 
             }
         }
 
@@ -45,11 +46,11 @@ namespace ServerApp.Hubs
             var user = _connectionMapping.GetUser(Context.ConnectionId);
             if (user != null)
             {
-                await Clients.Group(groupName).SendAsync("Send", new ChatMessage("Bot",$"{user.Username} has joined the group {groupName}."));
+                await Clients.Group(groupName).SendAsync("CommandSend", new ChatMessage("Bot",$"{user.Username} has joined the group {groupName}.",CommandType.Success, COMMAND_REG));
             }
             else
             {
-                await Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot","You cannot do that! Add a username first."));
+                await Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot","You cannot do that! Add a username first.", CommandType.Error, COMMAND_REG));
             }
 
         }
@@ -60,11 +61,11 @@ namespace ServerApp.Hubs
             var user = _connectionMapping.GetUser(Context.ConnectionId);
             if (user != null)
             {
-                await Clients.Group(groupName).SendAsync("Send", new ChatMessage("Bot", $"{user.Username} has left the group {groupName}."));
+                await Clients.Group(groupName).SendAsync("Send", new ChatMessage("Bot", $"{user.Username} has left the group {groupName}.", CommandType.Info));
             }
             else
             {
-                await Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot", "You cannot do that! Add a username first."));
+                await Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot", "You cannot do that! Add a username first.", CommandType.Error));
             }
         }
 

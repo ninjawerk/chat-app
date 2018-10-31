@@ -5,11 +5,12 @@ import ChatLog from './ChatLog';
 import ChatInput from '../components/ChatInput';
 import { connect } from 'react-redux'
 import ChatConfigInput from '../components/ChatConfigInput';
-import { addMessageToChatLog, clearChatLog } from './actions/chat.actions';
+import { addMessageToChatLog, clearChatLog, enableChat } from './actions/chat.actions';
+import { CommandType, Commands } from '../constants';
 
 const styles = {
   chatBackground: {background: '#f7f6ee'},
-  chatInputBackground: {background: '#debd86'},
+  chatInputBackground: {background: '#debd86', minHeight: "70px"},
 }
 class ChatContainer extends Component {
   
@@ -24,6 +25,7 @@ class ChatContainer extends Component {
       connection,
       roomName: '',
       userName: '',
+      chatEnabled: false
     };
 
     this.startListening();
@@ -36,10 +38,13 @@ class ChatContainer extends Component {
         this.props.addToChatLog(message)
       });
       this.state.connection.on("CommandSend",   (message) => {
+        if(message.type === CommandType.SUCCESS && message.command === Commands.REGISTER){
+          this.setState({
+            chatEnabled: true
+          })
+        }
         this.props.addToChatLog(message)
       });
-      await this.state.connection.invoke("AddToGroup", "Beast", "Junkertown");
-      await this.state.connection.invoke("SendMessageToGroup", "Junkertown", "I'm Back!");
     } catch (e) {
       console.error(e.toString());
     }
@@ -55,26 +60,42 @@ class ChatContainer extends Component {
   }
 
   render() {
-    // const { value, onIncrement, onDecrement } = this.props
+    const {chatEnabled} = this.state;
+
+    const renderConfigInput = () => ( 
+      <div className="d-flex p-2" style={styles.chatInputBackground}>
+          <ChatConfigInput sendConfig={this.sendConfig} configEnabled={!chatEnabled}></ChatConfigInput>
+      </div>
+    )
+
+    const renderChatLog = () => ( 
+      <div className="d-flex flex-sm-grow-1 p-2 px-4" style={styles.chatBackground}>
+          <ChatLog></ChatLog>
+      </div>
+    )
+
+    const renderChatInput = () => ( 
+      <div className="d-flex align-items-end">
+        <ChatInput sendMessage={this.sendMessage} chatEnabled={chatEnabled} ></ChatInput>
+      </div>
+    )
+
+    const renderInstructions = () => ( 
+      <div className="d-flex flex-sm-grow-1 p-2 px-4" style={styles.chatBackground}>
+        <h5 className="text-uppercase align-self-center mx-auto">Enter the above details to begin chatting.</h5>
+      </div>
+    )
+
     return (
       <div className="container h-100 d-flex flex-column">
-        <div className="d-flex p-2" style={styles.chatInputBackground}>
-          <ChatConfigInput sendConfig={this.sendConfig}></ChatConfigInput>
-        </div>
-        <div className="d-flex flex-sm-grow-1 p-2 px-4" style={styles.chatBackground}>
-          <ChatLog></ChatLog>
-        </div>
-        <div className="d-flex align-items-end">
-          <ChatInput sendMessage={this.sendMessage}></ChatInput>
-        </div>
+        {renderConfigInput()}
+        {chatEnabled && renderChatLog()}
+        {chatEnabled && renderChatInput()}
+        {!chatEnabled && renderInstructions()}
       </div>
     )
   }
 }
-
-// ChatContainer.propTypes = {
-// }
-
 
 const mapStateToProps = state => ({
 
@@ -84,6 +105,9 @@ function mapDispatchToProps(dispatch) {
   return {
     addToChatLog: (message) => {
       dispatch(addMessageToChatLog(message));
+    },
+    enableChat: (userName, roomName, ) => {
+      dispatch(enableChat(userName,roomName));
     },
   };
 }

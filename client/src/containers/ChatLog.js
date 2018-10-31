@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+const styles = {
+  chatContainer: {overflowY: 'auto'},
+   
+}
 class ChatLog extends Component {
   createChatLog = (log) => {
     return log.map(chat => {
@@ -22,7 +26,7 @@ class ChatLog extends Component {
   render() {
     const { chatData } = this.props
     return (
-      <div className="col-md-12 mt-3 mb-3">
+      <div className="col-md-12 mt-3 mb-4" style={styles.chatContainer}>
           {this.createChatLog(chatData)}
       </div>
     )
