@@ -1,6 +1,6 @@
 export const ADD_MESSAGE_TO_CHAT_LOG = "ADD_MESSAGE_TO_CHAT";
 export const CLEAR_CHAT_LOG = "CLEAR_CHAT_LOG";
-export const ENABLE_CHAT = "CLEAR_CHAT_LOG";
+export const ENABLE_CHAT = "ENABLE_CHAT";
 
 export function addMessageToChatLog(message) {
   return {

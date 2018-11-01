@@ -1,11 +1,15 @@
-import { CLEAR_CHAT_LOG, ADD_MESSAGE_TO_CHAT_LOG } from '../actions/chat.actions';
+import {
+  CLEAR_CHAT_LOG,
+  ADD_MESSAGE_TO_CHAT_LOG,
+  ENABLE_CHAT
+} from '../actions/chat.actions';
 
-const initialSate ={
+const initialSate = {
   chatLog: [],
   chatEnabled: false
 };
 
-const reducer = function chatReducer (state = initialSate, action) {
+const reducer = function chatReducer(state = initialSate, action) {
   switch (action.type) {
     case ADD_MESSAGE_TO_CHAT_LOG:
       return {
@@ -14,13 +18,13 @@ const reducer = function chatReducer (state = initialSate, action) {
       };
 
     case CLEAR_CHAT_LOG:
-      return  {
+      return {
         ...state,
         chatLog: []
       };
 
-    case CLEAR_CHAT_LOG:
-      return  {
+    case ENABLE_CHAT:
+      return {
         ...state,
         chatEnabled: true
       };
