@@ -40,15 +40,13 @@ namespace ServerApp
                 builder =>
                 {
                     builder.AllowAnyMethod().AllowAnyHeader()
-                        .WithOrigins("http://localhost:3000")
+                           .WithOrigins("http://localhost:3000") // TODO: get from an env file
                         .AllowCredentials();
                 }));
 
             services.AddSingleton<IConnectionMapping, ConnectionMapping>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
-
-            services.AddSingleton<IUserIdProvider, UserProvider>();
         }
 
 

@@ -1,16 +1,20 @@
 ﻿<Properties StartupConfiguration="{54DE3DB1-10CE-4D28-850F-F0917D4EDF3E}|Default">
   <MonoDevelop.Ide.ItemProperties.ServerApp PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ServerApp/Models/Enums/CommandType.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ServerApp/Properties/launchSettings.json">
     <Files>
-      <File FileName="ServerApp/Services/UserProvider.cs" Line="1" Column="1" />
       <File FileName="ServerApp/Services/ConnectionMapping.cs" Line="12" Column="18" />
-      <File FileName="ServerApp/Hubs/ChatHub.cs" Line="53" Column="14" />
-      <File FileName="ServerApp/Program.cs" Line="23" Column="6" />
-      <File FileName="ServerApp/Startup.cs" Line="46" Column="1" />
+      <File FileName="ServerApp/Hubs/ChatHub.cs" Line="14" Column="19" />
+      <File FileName="ServerApp/Program.cs" Line="15" Column="47" />
+      <File FileName="ServerApp/Startup.cs" Line="43" Column="90" />
       <File FileName="ServerApp/Services/Interfaces/IConnectionMapping.cs" Line="10" Column="24" />
-      <File FileName="ServerApp/Models/DTOs/ChatMessage.cs" Line="10" Column="21" />
+      <File FileName="ServerApp/Models/DTOs/ChatMessage.cs" Line="18" Column="31" />
       <File FileName="ServerApp/Models/DTOs/ConnectionUser.cs" Line="11" Column="1" />
-      <File FileName="ServerApp/Models/Enums/CommandType.cs" Line="6" Column="8" />
+      <File FileName="ServerApp/Models/Enums/CommandType.cs" Line="4" Column="28" />
+      <File FileName="ServerApp/Tests/ConnnectionMappingTest.cs" Line="19" Column="10" />
+      <File FileName="ServerApp/appsettings.json" Line="1" Column="1" />
+      <File FileName="ServerApp/appsettings.Development.json" Line="1" Column="1" />
+      <File FileName="ServerApp/ServerApp.csproj" Line="1" Column="1" />
+      <File FileName="ServerApp/Properties/launchSettings.json" Line="9" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

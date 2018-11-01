@@ -7,23 +7,43 @@ using ServerApp.Models.Enums;
 
 namespace ServerApp.Hubs
 {
+
+    /// <summary>
+    /// Chat hub.
+    /// A basic hub, this will have all the signalR methods. Everything is pretty self explanatory.
+    /// </summary>
     public class ChatHub : Hub
     {
         const string COMMAND_REG = "REG";
         const string COMMAND_CHAT = "CHAT";
         private IConnectionMapping _connectionMapping;
 
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        /// <param name="connectionMapping">Connection mapping.</param>
         public ChatHub(IConnectionMapping connectionMapping)
         {
             _connectionMapping = connectionMapping;
         }
 
+        /// <summary>
+        /// Registers the name of the user.
+        /// </summary>
+        /// <returns>The user name.</returns>
+        /// <param name="userName">User name.</param>
         public Task RegisterUserName(string userName)
         {
             _connectionMapping.Add(Context.ConnectionId, new ConnectionUser(userName));
             return Clients.Client(Context.ConnectionId).SendAsync("CommandSend", new ChatMessage("Bot","Successfully Registered! :)"));
         }
 
+        /// <summary>
+        /// Sends the message to group.
+        /// </summary>
+        /// <returns>The message to group.</returns>
+        /// <param name="groupName">Group name.</param>
+        /// <param name="message">Message.</param>
         public Task SendMessageToGroup(string groupName, string message)
         {
             var user = _connectionMapping.GetUser(Context.ConnectionId);
@@ -38,6 +58,12 @@ namespace ServerApp.Hubs
             }
         }
 
+        /// <summary>
+        /// Adds to group.
+        /// </summary>
+        /// <returns>The to group.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="groupName">Group name.</param>
         public async Task AddToGroup(string username, string groupName)
         {
             await this.RegisterUserName(username);
@@ -55,6 +81,11 @@ namespace ServerApp.Hubs
 
         }
 
+        /// <summary>
+        /// Removes from group.
+        /// </summary>
+        /// <returns>The from group.</returns>
+        /// <param name="groupName">Group name.</param>
         public async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
